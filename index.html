@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MasterPassword</title>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <main>
+        <img src="./images/icons/icon-192x192.png"/>
+        <form class="master-strings">
+            <label class="settings">
+                <input type="number" value="15"/>
+                <button class="add">&plus;</button>
+                <button class="generate" type="submit">Generate</button>
+            </label>
+
+        </form>
+        <input type="text" class="result" readonly/>
+    </main>
+    <script src="https://unpkg.com/vent-dom"></script>
+    <script src="./index.js"></script>
+</body>
+</html>

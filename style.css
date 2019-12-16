@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik|Source+Code+Pro&display=swap');
+
+* {
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.1em;
+}
+
+body {
+    background: #8494FC;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+main {
+    padding: 10%;
+    box-sizing: border-box;
+}
+
+
+input, button {
+    border-radius: 5px;
+    background: none;
+    border: 2px solid white;
+    background: #5556FC;
+    color: white;
+}
+
+label {
+    display: flex;
+    flex-direction: row;
+    margin-top: .5em;
+    justify-content: space-between;
+}
+
+label.settings input {
+    width: 100%;
+}
+
+.generate {
+    flex: 1;
+}
+
+button.add {
+    width: 50px;
+    margin: 0 20px;
+}
+
+label.str input {
+    margin: 0 20px 0 0;
+    flex: 1;
+}
+
+input {
+    padding: 0 .5em;
+}
+
+input.result {
+    font-family: 'Source Code Pro', monospace;
+    margin: 1em 0;
+    height: 3em;
+    font-size: 1.3em;
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px dashed white;
+    text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+    .generate {
+        width: 100%;
+    }
+
+    label.str {
+        flex-direction: column;
+    }
+
+    label.str input {
+        margin: 10px 0;
+    }
+}
