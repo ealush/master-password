@@ -57,6 +57,10 @@ input {
     padding: 0 .5em;
 }
 
+input:focus, button:focus {
+    border-color: rgb(70, 70, 70);
+}
+
 input.result {
     font-family: 'Source Code Pro', monospace;
     margin: 1em 0;
