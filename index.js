@@ -12,7 +12,7 @@ const newInput = () => {
     label.classList.add('str');
     label.innerHTML = '<input type="text"/><button class="delete">&times;</button>';
     return label;
-}
+};
 
 const addInput = () => {
     const $inputWrapper = newInput();
@@ -30,14 +30,16 @@ const setClearResult = (immediate = false) => {
 
     clearOutputTimeout = setTimeout(() => {
         $inputResult.value = '';
-    }, CLEAR_OUTPUT_TIMEOUT_MS)
-}
+        Array.from(document.querySelectorAll('label.str'))
+            .forEach((n) => n.remove())
+    }, CLEAR_OUTPUT_TIMEOUT_MS);
+};
 
 addInput();
 
 vent($btnAdd).on('click', addInput);
 
-const removeLabel = ({ target }) => {
+const removeLabel = (target) => {
     let next = target.parentElement.previousElementSibling
         || target.parentElement.nextElementSibling;
     target.parentElement.remove();
@@ -58,7 +60,7 @@ const onArrowDown = (target) => {
     if (target.value) {
         addInput();
     }
-}
+};
 
 const onArrowUp = (target) => {
     if (target.parentElement.previousElementSibling) {
@@ -67,13 +69,13 @@ const onArrowUp = (target) => {
     }
 
     $inputLength.focus();
-}
+};
 
 vent($form)
-    .on('click', '.delete', removeLabel)
+    .on('click', '.delete', ({ target }) => removeLabel(target))
     .on('keyup', '.str input', (e) => {
         if ([e.key, e.code].includes('Escape')) {
-            removeLabel(e);
+            removeLabel(e.target);
         } else if ([e.key, e.code].includes('ArrowDown')) {
             onArrowDown(e.target);
         } else if ([e.key, e.code].includes('ArrowUp')) {
@@ -108,4 +110,4 @@ const sendMessage = (msg) => {
             $inputResult.value = data;
             setClearResult();
         });
-})()
+})();
