@@ -1,87 +1,161 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik|Source+Code+Pro&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Rubik|Roboto+Mono&display=swap");
 
 * {
-    font-family: 'Rubik', sans-serif;
-    font-size: 1.1em;
+  font-family: "Rubik", sans-serif;
+  font-size: 1.05em;
 }
 
 body {
-    background: #8494FC;
+  background: #ffffff;
+  padding: 0;
+  margin: 0;
 }
 
 img {
-    display: block;
-    margin: 0 auto;
+  display: block;
+  margin: 0 auto;
 }
 
 main {
-    padding: 10%;
-    box-sizing: border-box;
+  padding: 10%;
+  box-sizing: border-box;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
+input,
+button {
+  transition: 0.2s;
+  border-radius: 5px;
+  background: none;
+  background: #ffffff;
+  color: #555;
+}
 
-input, button {
-    border-radius: 5px;
-    background: none;
-    border: 2px solid white;
-    background: #5556FC;
-    color: white;
+button {
+  color: rgb(255, 255, 255);
+  border: 2px solid rgb(211, 211, 211);
+  border: 0;
+  font-size: 0.9em;
 }
 
 label {
-    display: flex;
-    flex-direction: row;
-    margin-top: .5em;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5em;
+  justify-content: space-between;
+}
+
+label.settings {
+  padding: 1em;
+  background: rgb(223, 223, 223);
+  border-radius: 10px;
+  margin: 1em 0;
 }
 
 label.settings input {
-    width: 100%;
+  width: 100%;
 }
 
 .generate {
-    flex: 1;
+  flex: 1;
 }
 
 button.add {
-    width: 50px;
-    margin: 0 20px;
+  width: 2em;
+  margin: 0 0.5em;
+  background: #4caf50;
+}
+button.add:hover {
+  background: #81c784;
+}
+button.add:active {
+  background: #388e3c;
+}
+button.delete {
+  width: 2em;
+  background: #f44336;
+}
+button.delete:hover {
+  background: #e57373;
+}
+button.delete:active {
+  background: #c62828;
+}
+
+button.generate {
+  background: #2196f3;
+}
+button.generate:hover {
+  background: #64b5f6;
+}
+button.generate:active {
+  background: #1976d2;
+}
+
+label.str {
+  background: #eee;
+  padding: 1em;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+label:focus-within {
+  box-shadow: 0 5px 20px rgb(224, 224, 224);
 }
 
 label.str input {
-    margin: 0 20px 0 0;
-    flex: 1;
+  margin: 0 20px 0 0;
+  flex: 1;
 }
 
 input {
-    padding: 0 .5em;
+  padding: 0.5em;
+  border: 2px solid white;
+  font-size: 0.7em;
+}
+input:focus {
+  border-color: rgb(221, 221, 221);
 }
 
-input:focus, button:focus {
-    border-color: rgb(70, 70, 70);
+input:focus,
+button:focus {
+  outline: none;
+  transition: 0.2s;
 }
 
-input.result {
-    font-family: 'Source Code Pro', monospace;
-    margin: 1em 0;
-    height: 3em;
-    font-size: 1.3em;
-    width: 100%;
-    box-sizing: border-box;
-    border: 2px dashed white;
-    text-align: center;
+.result {
+  padding-top: 1em;
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.result input {
+  font-family: "Roboto Mono", monospace;
+  height: 3em;
+  font-size: 1.2em;
+  width: 100%;
+  box-sizing: border-box;
+  color: #555;
+  text-align: center;
+  background: rgb(238, 238, 238);
 }
 
 @media only screen and (max-width: 600px) {
-    .generate {
-        width: 100%;
-    }
+  label.str {
+    flex-direction: column;
+  }
 
-    label.str {
-        flex-direction: column;
-    }
+  label.str .delete {
+    width: 100%;
+  }
 
-    label.str input {
-        margin: 10px 0;
-    }
+  label.str input {
+    margin: 10px 0;
+  }
 }
