@@ -25,12 +25,12 @@ const setClearResult = (immediate = false) => {
   clearTimeout(clearOutputTimeout);
 
   if (immediate) {
-    $inputResult.value = "";
+    setInputValue("");
     return;
   }
 
   clearOutputTimeout = setTimeout(() => {
-    $inputResult.value = "";
+    setInputValue("");
     Array.from(document.querySelectorAll("label.str")).forEach((n) =>
       n.remove()
     );
@@ -117,11 +117,14 @@ const sendMessage = (msg) => {
   });
 
   vent(navigator.serviceWorker).on("message", ({ data }) => {
-    $inputResult.value = data;
+    setInputValue(data);
     setClearResult();
   });
 })();
 
+function setInputValue(value) {
+  $inputResult.value = value;
+}
 function copyResult(target) {
   target.select();
   document.execCommand("copy");

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Rubik|Roboto+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Rubik|Cutive+Mono&display=swap");
 
 * {
   font-family: "Rubik", sans-serif;
@@ -28,7 +28,7 @@ main {
 
 input,
 button {
-  transition: 0.2s;
+  transition: box-shadow 0.2s;
   border-radius: 5px;
   background: none;
   background: #ffffff;
@@ -135,15 +135,29 @@ button:focus {
   flex-direction: column;
 }
 
+.result-input-wrapper {
+  border: 2px solid rgb(184, 184, 184);
+  overflow: hidden;
+  background: rgb(238, 238, 238);
+  border-radius: 5px;
+}
+
 .result input {
-  font-family: "Roboto Mono", monospace;
+  border: none;
+  font-family: "Cutive Mono", monospace;
   height: 3em;
   font-size: 1.2em;
   width: 100%;
   box-sizing: border-box;
-  color: #555;
+  color: rgb(148, 148, 148);
   text-align: center;
-  background: rgb(238, 238, 238);
+  background: none;
+  filter: blur(5px);
+  transition: filter 0.3s;
+}
+
+.result input:hover {
+  filter: blur(0);
 }
 
 @media only screen and (max-width: 600px) {
