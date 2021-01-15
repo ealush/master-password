@@ -154,6 +154,7 @@ button:focus {
   background: none;
   filter: blur(4px);
   transition: filter 0.3s;
+  user-select: none;
 }
 
 .result input:active {
