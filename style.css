@@ -152,11 +152,11 @@ button:focus {
   color: rgb(148, 148, 148);
   text-align: center;
   background: none;
-  filter: blur(5px);
+  filter: blur(4px);
   transition: filter 0.3s;
 }
 
-.result input:hover {
+.result input:active {
   filter: blur(0);
 }
 
