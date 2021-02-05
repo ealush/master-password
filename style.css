@@ -157,7 +157,8 @@ button:focus {
   user-select: none;
 }
 
-.result input:active {
+.result input:active,
+.result input:hover {
   filter: blur(0);
 }
 

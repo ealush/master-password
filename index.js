@@ -18,7 +18,9 @@ const newInput = () => {
 const addInput = () => {
   const $inputWrapper = newInput();
   $strContainer.appendChild($inputWrapper);
-  $inputWrapper.querySelector("input").focus();
+  requestAnimationFrame(() => {
+    $inputWrapper.querySelector("input").focus();
+  });
 };
 
 const setClearResult = (immediate = false) => {
