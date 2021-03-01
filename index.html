@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="manifest" href="./manifest.webmanifest">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>MasterPassword</title>
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
     <main>
-        <form class="master-strings">
-            <label class="settings">
-                <input class="length" type="number" value="15"/>
-                <button class="add" type="button">&plus;</button>
-                <button class="generate" type="submit">Generate</button>
-            </label>
-            <div class="str-container"></div>
-        </form>
-        <div class="result">
-            <div class="result-input-wrapper">
-                <input type="text" readonly disabled/>
-            </div>
+      <form class="master-strings">
+        <label class="settings">
+          <input class="length" type="number" value="15" />
+          <button class="add" type="button">&plus;</button>
+          <button class="generate" type="submit">Generate</button>
+        </label>
+        <div class="str-container"></div>
+      </form>
+      <div class="result">
+        <div class="result-input-wrapper">
+          <input type="text" readonly />
         </div>
+      </div>
     </main>
     <script src="https://unpkg.com/vent-dom"></script>
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>

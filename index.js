@@ -36,6 +36,7 @@ const setClearResult = (immediate = false) => {
     Array.from(document.querySelectorAll("label.str")).forEach((n) =>
       n.remove()
     );
+    addInput();
   }, CLEAR_OUTPUT_TIMEOUT_MS);
 };
 

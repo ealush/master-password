@@ -17,7 +17,7 @@ img {
 }
 
 main {
-  padding: 10%;
+  padding: 100px;
   box-sizing: border-box;
   height: 100vh;
   display: flex;
