@@ -17,7 +17,6 @@ img {
 }
 
 main {
-  padding: 100px;
   box-sizing: border-box;
   height: 100vh;
   display: flex;
@@ -63,6 +62,10 @@ label.settings {
 
 label.settings input {
   width: 100%;
+}
+
+input[type="number"] {
+  min-width: 25px;
 }
 
 .generate {
@@ -173,13 +176,26 @@ span.input-wrapper {
   filter: blur(0);
 }
 
+@media only screen and (min-width: 600px) {
+  main {
+    padding: 2em 100px;
+  }
+}
+
 @media only screen and (max-width: 600px) {
+  label.settings,
+  label.str,
+  div.result-input-wrapper {
+    border-radius: 0;
+  }
+
   label.str {
     flex-direction: column;
   }
 
   label.str .delete {
     width: 100%;
+    height: 1.5em;
   }
 
   label.str input {
