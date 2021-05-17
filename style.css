@@ -26,6 +26,10 @@ main {
   margin: 0 auto;
 }
 
+button {
+  cursor: pointer;
+}
+
 input,
 button {
   transition: box-shadow 0.2s;
@@ -47,6 +51,7 @@ label {
   flex-direction: row;
   margin-top: 0.5em;
   justify-content: space-between;
+  gap: 1em;
 }
 
 label.settings {
@@ -66,7 +71,6 @@ label.settings input {
 
 button.add {
   width: 2em;
-  margin: 0 0.5em;
   background: #4caf50;
 }
 button.add:hover {
@@ -109,7 +113,8 @@ label:focus-within {
 
 label.str input {
   margin: 0 20px 0 0;
-  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 input {
@@ -125,6 +130,12 @@ input:focus,
 button:focus {
   outline: none;
   transition: 0.2s;
+}
+
+span.input-wrapper {
+  display: inline-block;
+  position: relative;
+  flex: 1;
 }
 
 .result {
@@ -174,4 +185,14 @@ button:focus {
   label.str input {
     margin: 10px 0;
   }
+}
+
+button.toggle-reveal {
+  background: none;
+  outline: none;
+  border: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }

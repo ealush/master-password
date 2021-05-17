@@ -10,8 +10,12 @@ let clearOutputTimeout;
 const newInput = () => {
   const label = document.createElement("label");
   label.classList.add("str");
-  label.innerHTML =
-    '<input type="text"/><button class="delete">&times;</button>';
+  label.innerHTML = `<span class="input-wrapper">
+      <input type="password"/>
+      <button class="toggle-reveal" type="button">🕶</button>
+    </span>
+    <button class="delete">&times;</button>
+  `;
   return label;
 };
 
@@ -98,6 +102,20 @@ vent($form)
     vent($inputResult).trigger("focus");
 
     sendMessage(values);
+  })
+  .on("click", ".toggle-reveal", ({ target }) => {
+    const wrapper = target.closest(".input-wrapper");
+    const input = wrapper.querySelector("input");
+
+    const shouldHide = input.type === "text";
+
+    if (shouldHide) {
+      target.innerText = "🕶";
+      input.type = "password";
+    } else {
+      target.innerText = "👓";
+      input.type = "text";
+    }
   });
 
 vent($inputResult).on("click", ({ target }) => {
@@ -115,14 +133,16 @@ const sendMessage = (msg) => {
 };
 
 (async () => {
-  await navigator.serviceWorker.register("./sw.js", {
-    updateViaCache: "none",
-  });
+  try {
+    await navigator.serviceWorker.register("./sw.js", {
+      updateViaCache: "none",
+    });
 
-  vent(navigator.serviceWorker).on("message", ({ data }) => {
-    setInputValue(data);
-    setClearResult();
-  });
+    vent(navigator.serviceWorker).on("message", ({ data }) => {
+      setInputValue(data);
+      setClearResult();
+    });
+  } catch (_) {}
 })();
 
 function setInputValue(value) {
