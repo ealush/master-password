@@ -129,7 +129,11 @@ vent($inputResult).on("keyup", (e) => {
 });
 
 const sendMessage = (msg) => {
-  navigator.serviceWorker.controller.postMessage(msg);
+  try {
+    navigator.serviceWorker.controller.postMessage(msg);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 (async () => {
@@ -142,7 +146,9 @@ const sendMessage = (msg) => {
       setInputValue(data);
       setClearResult();
     });
-  } catch (_) {}
+  } catch (e) {
+    console.error(e);
+  }
 })();
 
 function setInputValue(value) {
