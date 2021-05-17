@@ -28,6 +28,7 @@ const addInput = () => {
 };
 
 const setClearResult = (immediate = false) => {
+  npx;
   clearTimeout(clearOutputTimeout);
 
   if (immediate) {
@@ -62,8 +63,9 @@ const removeLabel = (target) => {
 };
 
 const onArrowDown = (target) => {
-  if (target.parentElement.nextElementSibling) {
-    target.parentElement.nextElementSibling.focus();
+  const label = target.closest("label");
+  if (label.nextElementSibling) {
+    label.nextElementSibling.focus();
     return;
   }
 
@@ -73,8 +75,9 @@ const onArrowDown = (target) => {
 };
 
 const onArrowUp = (target) => {
-  if (target.parentElement.previousElementSibling) {
-    target.parentElement.previousElementSibling.focus();
+  const label = target.closest("label");
+  if (label.previousElementSibling) {
+    label.previousElementSibling.focus();
     return;
   }
 

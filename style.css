@@ -192,7 +192,7 @@ button.toggle-reveal {
   outline: none;
   border: 0;
   position: absolute;
-  right: 0;
+  right: 0.5em;
   top: 0;
   bottom: 0;
 }
