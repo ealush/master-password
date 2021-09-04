@@ -28,7 +28,6 @@ const addInput = () => {
 };
 
 const setClearResult = (immediate = false) => {
-  npx;
   clearTimeout(clearOutputTimeout);
 
   if (immediate) {
