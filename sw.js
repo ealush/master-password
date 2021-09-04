@@ -1,5 +1,5 @@
 const CACHE_KEY_PREFIX = "PW_CACHE";
-const VERSION = 24;
+const VERSION = 25;
 const CACHE_KEY = `${CACHE_KEY_PREFIX}_${VERSION}`;
 
 self.addEventListener("install", self.skipWaiting);

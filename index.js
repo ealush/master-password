@@ -31,22 +31,26 @@ const setClearResult = (immediate = false) => {
   clearTimeout(clearOutputTimeout);
 
   if (immediate) {
-    setInputValue("");
+    handleClear()
     return;
   }
 
   clearOutputTimeout = setTimeout(() => {
-    setInputValue("");
-    Array.from(document.querySelectorAll("label.str")).forEach((n) =>
-      n.remove()
-    );
-    addInput();
+    handleClear()
   }, CLEAR_OUTPUT_TIMEOUT_MS);
 };
 
 addInput();
 
 vent($btnAdd).on("click", addInput);
+
+function handleClear() {
+  setInputValue("");
+  Array.from(document.querySelectorAll("label.str")).forEach((n) =>
+    n.remove()
+  );
+  addInput();
+}
 
 const removeLabel = (target) => {
   let next =
