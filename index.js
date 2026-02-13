@@ -1,20 +1,55 @@
 const $form = document.querySelector("form.master-strings");
-const $inputLength = $form.querySelector("form input.length");
+const $inputLength = $form.querySelector("input.length");
+const $lengthSlider = $form.querySelector("input.length-slider");
 const $btnAdd = $form.querySelector("button.add");
 const $strContainer = $form.querySelector(".str-container");
 const $inputResult = document.querySelector(".result input");
+const $copyResult = document.querySelector("button.copy-result");
+const $themeToggle = document.querySelector("button.theme-toggle");
 
 const CLEAR_OUTPUT_TIMEOUT_MS = 1000 * 30;
 let clearOutputTimeout;
+let activeServiceWorker = null;
+
+const applyTheme = (theme) => {
+  const isLight = theme === "light";
+  document.body.classList.toggle("light", isLight);
+  $themeToggle.innerText = isLight ? "🌙" : "☀️";
+};
+
+const storedTheme = localStorage.getItem("theme") || "dark";
+applyTheme(storedTheme);
+
+$themeToggle.addEventListener("click", () => {
+  const nextTheme = document.body.classList.contains("light") ? "dark" : "light";
+  applyTheme(nextTheme);
+  localStorage.setItem("theme", nextTheme);
+});
+
+const syncLengthInputs = (value) => {
+  const numeric = Math.max(4, Math.min(40, Number(value) || 15));
+  $inputLength.value = numeric;
+  $lengthSlider.value = numeric;
+};
+
+syncLengthInputs($inputLength.value);
+
+vent($lengthSlider).on("input", ({ target }) => {
+  syncLengthInputs(target.value);
+});
+
+vent($inputLength).on("input", ({ target }) => {
+  syncLengthInputs(target.value);
+});
 
 const newInput = () => {
   const label = document.createElement("label");
   label.classList.add("str");
   label.innerHTML = `<span class="input-wrapper">
-      <input type="password"/>
+      <input type="password" placeholder="phrase" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"/>
       <button class="toggle-reveal" type="button">🕶</button>
     </span>
-    <button class="delete">&times;</button>
+    <button class="delete" type="button">&times;</button>
   `;
   return label;
 };
@@ -31,31 +66,28 @@ const setClearResult = (immediate = false) => {
   clearTimeout(clearOutputTimeout);
 
   if (immediate) {
-    handleClear()
+    handleClear();
     return;
   }
 
   clearOutputTimeout = setTimeout(() => {
-    handleClear()
+    handleClear();
   }, CLEAR_OUTPUT_TIMEOUT_MS);
 };
 
+addInput();
 addInput();
 
 vent($btnAdd).on("click", addInput);
 
 function handleClear() {
   setInputValue("");
-  Array.from(document.querySelectorAll("label.str")).forEach((n) =>
-    n.remove()
-  );
+  Array.from(document.querySelectorAll("label.str")).forEach((n) => n.remove());
   addInput();
 }
 
 const removeLabel = (target) => {
-  let next =
-    target.parentElement.previousElementSibling ||
-    target.parentElement.nextElementSibling;
+  let next = target.parentElement.previousElementSibling || target.parentElement.nextElementSibling;
   target.parentElement.remove();
 
   if (next) {
@@ -98,16 +130,14 @@ vent($form)
       onArrowUp(e.target);
     }
   })
-  .on("submit", (e) => {
+  .on("submit", async (e) => {
     e.preventDefault();
 
-    const values = [...$form.querySelectorAll("input")].map(
-      ({ value }) => value
-    );
+    const values = [$inputLength.value, ...$form.querySelectorAll("label.str input")].map(({ value }) => value);
 
     vent($inputResult).trigger("focus");
 
-    sendMessage(values);
+    await sendMessage(values);
   })
   .on("click", ".toggle-reveal", ({ target }) => {
     const wrapper = target.closest(".input-wrapper");
@@ -134,9 +164,31 @@ vent($inputResult).on("keyup", (e) => {
   }
 });
 
-const sendMessage = (msg) => {
+vent($copyResult).on("click", () => {
+  copyResult($inputResult);
+});
+
+const hashLocally = async (value) => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(value.join());
+  const buffer = await crypto.subtle.digest("SHA-512", data);
+  return btoa(
+    Array.from(new Uint8Array(buffer))
+      .map((buff) => buff.toString(35).padStart(2, "0"))
+      .join("")
+  ).substr(0, value[0]);
+};
+
+const sendMessage = async (msg) => {
   try {
-    navigator.serviceWorker.controller.postMessage(msg);
+    if (activeServiceWorker) {
+      activeServiceWorker.postMessage(msg);
+      return;
+    }
+
+    const localResult = await hashLocally(msg);
+    setInputValue(localResult);
+    setClearResult();
   } catch (e) {
     console.error(e);
   }
@@ -144,9 +196,17 @@ const sendMessage = (msg) => {
 
 (async () => {
   try {
-    await navigator.serviceWorker.register("./sw.js", {
+    if (!navigator.serviceWorker) {
+      return;
+    }
+
+    const registration = await navigator.serviceWorker.register("./sw.js", {
       updateViaCache: "none",
     });
+
+    await navigator.serviceWorker.ready;
+
+    activeServiceWorker = navigator.serviceWorker.controller || registration.active || registration.waiting;
 
     vent(navigator.serviceWorker).on("message", ({ data }) => {
       setInputValue(data);
@@ -160,8 +220,24 @@ const sendMessage = (msg) => {
 function setInputValue(value) {
   $inputResult.value = value;
 }
-function copyResult(target) {
-  target.select();
-  document.execCommand("copy");
+
+async function copyResult(target) {
+  const value = target.value;
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(value);
+    } else {
+      target.removeAttribute("readonly");
+      target.focus();
+      target.setSelectionRange(0, value.length);
+      document.execCommand("copy");
+      target.setAttribute("readonly", "readonly");
+      window.getSelection()?.removeAllRanges();
+    }
+  } catch (e) {
+    console.error(e);
+  }
+
   setClearResult(true);
 }
