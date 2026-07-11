@@ -25,10 +25,17 @@
 
 * { box-sizing: border-box; }
 
-html { min-height: 100%; background: var(--paper); }
+html {
+  min-height: 100%;
+  overflow-x: hidden;
+  background: var(--paper);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   min-height: 100%;
+  overflow-x: hidden;
   margin: 0;
   color: var(--ink);
   background: radial-gradient(circle at 8% 2%, rgba(79, 109, 245, .08), transparent 28rem), var(--paper);
@@ -40,7 +47,8 @@ button, input { font: inherit; }
 button { -webkit-tap-highlight-color: transparent; }
 
 .app-shell {
-  width: min(100% - 40px, 860px);
+  width: calc(100% - 40px);
+  max-width: 860px;
   min-height: 100svh;
   margin: 0 auto;
   padding: max(32px, env(safe-area-inset-top)) 0 max(24px, env(safe-area-inset-bottom));
@@ -152,7 +160,7 @@ footer { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px;
 }
 
 @media (max-width: 620px) {
-  .app-shell { width: min(100% - 24px, 860px); padding-top: max(20px, env(safe-area-inset-top)); }
+  .app-shell { width: calc(100% - 24px); padding-top: max(20px, env(safe-area-inset-top)); }
   .app-header { margin-bottom: 22px; }
   .workspace, .result { border-radius: 19px; }
   .section-heading { align-items: flex-start; padding: 23px 20px 20px; }
@@ -163,6 +171,7 @@ footer { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px;
   .delete { width: 40px; }
   .generation-bar { grid-template-columns: 104px 1fr; padding: 16px 14px 17px; }
   .length-field { padding-left: 11px; }
+  .length { font-size: 16px; }
   .generate { padding: 0 15px; font-size: 13px; }
   .result { padding: 23px 20px 22px; }
   .result-output { min-height: 62px; padding-inline: 15px; }

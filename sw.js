@@ -1,26 +1,24 @@
 const CACHE_KEY_PREFIX = "PW_CACHE";
-const VERSION = 27;
+const VERSION = 28;
 const CACHE_KEY = `${CACHE_KEY_PREFIX}_${VERSION}`;
 
-self.addEventListener("install", self.skipWaiting);
+self.addEventListener("install", () => self.skipWaiting());
 
 self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") return;
+
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      if (response) {
+    fetch(event.request)
+      .then((response) => {
+        if (response.ok || response.type === "opaque") {
+          const copy = response.clone();
+          caches.open(CACHE_KEY).then((cache) => cache.put(event.request, copy));
+        }
         return response;
-      }
-      return fetch(event.request).then((response) =>
-        caches.open(CACHE_KEY).then((cache) => {
-          cache.put(event.request, response.clone());
-          return response;
-        })
-      );
-    })
+      })
+      .catch(() => caches.match(event.request))
   );
 });
-
-onActivate = (e) => e.waitUntil(handleActivation());
 
 self.addEventListener("activate", (e) => {
   e.waitUntil(
