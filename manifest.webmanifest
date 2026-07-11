@@ -1,8 +1,8 @@
 {
   "name": "Master Password",
   "short_name": "Master Password",
-  "theme_color": "#ebebeb",
-  "background_color": "#b1b1b1",
+  "theme_color": "#f6f8fb",
+  "background_color": "#f6f8fb",
   "display": "standalone",
   "scope": "/master-password/",
   "start_url": "/master-password/",

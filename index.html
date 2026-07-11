@@ -1,31 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <link rel="manifest" href="./manifest.webmanifest" />
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>MasterPassword</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f6f8fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0f17" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./images/icons/icon-256x256.png" />
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <title>Master Password</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <main>
-      <form class="master-strings">
-        <label class="settings">
-          <input class="length" type="number" value="15" />
-          <button class="add" type="button">&plus;</button>
-          <button class="generate" type="submit">Generate</button>
-        </label>
-        <div class="str-container"></div>
-      </form>
-      <div class="result">
-        <div class="result-input-wrapper">
-          <input type="text" readonly />
+    <main class="app-shell">
+      <header class="app-header">
+        <div class="mark" aria-hidden="true">M</div>
+        <div>
+          <p class="eyebrow">Private by design</p>
+          <h1>Master Password</h1>
         </div>
-      </div>
+      </header>
+
+      <section class="workspace" aria-labelledby="ingredients-title">
+        <div class="section-heading">
+          <div>
+            <p class="step">01</p>
+            <h2 id="ingredients-title">Your secret ingredients</h2>
+            <p>Combine memorable phrases. They never leave this device.</p>
+          </div>
+          <button class="add" type="button" aria-label="Add another secret">
+            <span aria-hidden="true">＋</span> Add secret
+          </button>
+        </div>
+
+        <form class="master-strings" autocomplete="off">
+          <div class="str-container" aria-live="polite"></div>
+
+          <div class="generation-bar">
+            <label class="length-field">
+              <span>Length</span>
+              <input class="length" type="number" value="15" min="4" max="128" inputmode="numeric" aria-label="Password length" />
+            </label>
+            <button class="generate" type="submit">
+              Generate password <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="result" aria-labelledby="result-title">
+        <div class="result-copy">
+          <p class="step">02</p>
+          <div>
+            <h2 id="result-title">Your generated password</h2>
+            <p class="result-hint">Tap to copy. It clears automatically after 30 seconds.</p>
+          </div>
+        </div>
+        <button class="result-output" type="button" aria-label="Copy generated password" disabled>
+          <span class="placeholder">Your password will appear here</span>
+          <span class="password" aria-live="polite"></span>
+          <span class="copy-label">Copy</span>
+        </button>
+      </section>
+
+      <footer>
+        <span>↓ / ↑ navigate</span><span>esc removes a row</span><span>enter generates</span>
+      </footer>
     </main>
-    <script src="https://unpkg.com/vent-dom"></script>
+    <div class="toast" role="status" aria-live="polite"></div>
     <script src="./index.js"></script>
   </body>
 </html>
